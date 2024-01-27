@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/mashingan/smapping"
 	"net/http"
 	"social-media/pkg/config"
 	"social-media/pkg/dto"
@@ -64,6 +65,27 @@ func (h *UserHandler) GetUserByIDHandler(w http.ResponseWriter, r *http.Request)
 	}
 
 	json.NewEncoder(w).Encode(user)
+}
+func (h *UserHandler) GetUserByIDHandlerV2(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	userID := vars["id"]
+	id, _ := strconv.Atoi(userID)
+
+	// Convert userID to uint or handle error if conversion fails
+	// ...
+
+	user, err := userService.GetUserByID(uint(id))
+	userDto := dto.UserDto{}
+	err = smapping.FillStruct(&userDto, smapping.MapFields(user))
+	if err != nil {
+		return
+	}
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	json.NewEncoder(w).Encode(userDto)
 }
 
 func (h *UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -131,4 +153,20 @@ func (h *UserHandler) GetFollowingsAndFollowersInfo(w http.ResponseWriter, r *ht
 		return
 	}
 	utils.SuccessResponse(w, followingOutput, http.StatusOK, "followers and followings info successfully retrieved")
+}
+
+func (h *UserHandler) CreateUserHandlerV2(w http.ResponseWriter, r *http.Request) {
+	var userDto dto.UserDto
+	err := json.NewDecoder(r.Body).Decode(&userDto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	err = userService.CreateUserV2(&userDto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
 }

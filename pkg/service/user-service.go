@@ -14,4 +14,5 @@ type UserService interface {
 	UserExistsById(userID uint) bool
 	FollowOrUnfollow(input dto.FollowInput) error
 	GetFollowingsAndFollowersInfo(userID uint) (dto.FollowingOutput, error)
+	CreateUserV2(userDto *dto.UserDto) error
 }

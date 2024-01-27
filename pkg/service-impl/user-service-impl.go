@@ -3,6 +3,7 @@ package service_impl
 import (
 	"errors"
 	"fmt"
+	"github.com/mashingan/smapping"
 	"gorm.io/gorm"
 	"social-media/pkg/dto"
 	"social-media/pkg/model"
@@ -13,6 +14,15 @@ import "social-media/pkg/repository"
 type UserServiceImpl struct {
 	userRepository   *repository.UserRepository
 	followRepository *repository.FollowRepository
+}
+
+func (s *UserServiceImpl) CreateUserV2(userDto *dto.UserDto) error {
+	user := model.User{}
+	err := smapping.FillStruct(&user, smapping.MapFields(userDto))
+	if err != nil {
+		return err
+	}
+	return s.userRepository.CreateUser(&user)
 }
 
 func (s *UserServiceImpl) GetFollowingsAndFollowersInfo(userID uint) (dto.FollowingOutput, error) {

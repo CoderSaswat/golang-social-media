@@ -11,6 +11,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/lib/pq v1.10.9 // indirect
+	github.com/mashingan/smapping v0.1.19 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/text v0.12.0 // indirect

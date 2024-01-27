@@ -14,9 +14,8 @@ type Address struct {
 
 type User struct {
 	gorm.Model
-	Name  string `json:"name"`
-	Phone string `json:"phone"`
-	//Posts   []Post  `json:"posts"`
+	Name    string  `json:"name"`
+	Phone   string  `json:"phone"`
 	Address Address `json:"address"`
 }
 
