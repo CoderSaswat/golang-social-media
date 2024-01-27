@@ -53,3 +53,17 @@ func (r FollowRepository) DeleteFollowById(followID uint) error {
 
 	return nil
 }
+
+func (r FollowRepository) GetFollowByUserId(userId uint) []model.Follow {
+	var follows []model.Follow
+	// Find all Follow records where UserID matches
+	r.db.Preload("TargetUser").Where("user_id = ?", userId).Find(&follows)
+	return follows
+}
+
+func (r FollowRepository) GetFollowByTargetUserId(userId uint) []model.Follow {
+	var follows []model.Follow
+	// Find all Follow records where UserID matches
+	r.db.Preload("User").Where("target_user_id = ?", userId).Find(&follows)
+	return follows
+}

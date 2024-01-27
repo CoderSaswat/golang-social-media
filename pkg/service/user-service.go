@@ -13,4 +13,5 @@ type UserService interface {
 	GetAllUsers() ([]model.User, error)
 	UserExistsById(userID uint) bool
 	FollowOrUnfollow(input dto.FollowInput) error
+	GetFollowingsAndFollowersInfo(userID uint) (dto.FollowingOutput, error)
 }

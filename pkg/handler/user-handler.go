@@ -120,3 +120,15 @@ func (h *UserHandler) FollowOrUnfollwHandler(writer http.ResponseWriter, request
 	}
 	utils.SuccessResponse(writer, nil, http.StatusOK, "follow or unfollow action success")
 }
+
+func (h *UserHandler) GetFollowingsAndFollowersInfo(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	userID := vars["id"]
+	id, _ := strconv.Atoi(userID)
+	followingOutput, err := userService.GetFollowingsAndFollowersInfo(uint(id))
+	if err != nil {
+		utils.ErrorResponse(w, nil, 400, err)
+		return
+	}
+	utils.SuccessResponse(w, followingOutput, http.StatusOK, "followers and followings info successfully retrieved")
+}
