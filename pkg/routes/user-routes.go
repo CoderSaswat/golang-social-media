@@ -17,5 +17,6 @@ func SetupUserRoutes(r *mux.Router) {
 	r.HandleFunc("/users/{id}", userHandler.GetUserByIDHandler).Methods("GET")
 	r.HandleFunc("/users/{id}", userHandler.UpdateUserHandler).Methods("PUT")
 	r.HandleFunc("/users/{id}", userHandler.DeleteUserHandler).Methods("DELETE")
+	r.HandleFunc("/users/follow-or-unfollow", userHandler.FollowOrUnfollwHandler).Methods("POST")
 	fmt.Println("user routes set up successfully")
 }

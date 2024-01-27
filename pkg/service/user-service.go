@@ -1,6 +1,9 @@
 package service
 
-import "social-media/pkg/model"
+import (
+	"social-media/pkg/dto"
+	"social-media/pkg/model"
+)
 
 type UserService interface {
 	CreateUser(user *model.User) error
@@ -8,4 +11,6 @@ type UserService interface {
 	UpdateUser(userID uint, updatedUser *model.User) error
 	DeleteUser(userID uint) error
 	GetAllUsers() ([]model.User, error)
+	UserExistsById(userID uint) bool
+	FollowOrUnfollow(input dto.FollowInput) error
 }

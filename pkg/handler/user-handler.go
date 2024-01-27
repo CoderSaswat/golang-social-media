@@ -5,10 +5,12 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 	"social-media/pkg/config"
+	"social-media/pkg/dto"
 	"social-media/pkg/model"
 	_ "social-media/pkg/model"
 	"social-media/pkg/service"
 	service_impl "social-media/pkg/service-impl"
+	"social-media/pkg/utils"
 	"strconv"
 )
 
@@ -102,4 +104,19 @@ func (h *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func (h *UserHandler) FollowOrUnfollwHandler(writer http.ResponseWriter, request *http.Request) {
+	var followInput dto.FollowInput
+	err := json.NewDecoder(request.Body).Decode(&followInput)
+	if err != nil {
+		utils.ErrorResponse(writer, nil, http.StatusBadRequest, err)
+		return
+	}
+	err = userService.FollowOrUnfollow(followInput)
+	if err != nil {
+		utils.ErrorResponse(writer, nil, http.StatusBadRequest, err)
+		return
+	}
+	utils.SuccessResponse(writer, nil, http.StatusOK, "follow or unfollow action success")
 }

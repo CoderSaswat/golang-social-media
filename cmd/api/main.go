@@ -10,7 +10,7 @@ import (
 
 func main() {
 	db := config.GetDb()
-	err := db.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.Image{}, &model.Like{}, &model.Notification{}, &model.Address{})
+	err := db.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.Image{}, &model.Like{}, &model.Notification{}, &model.Address{}, &model.Follow{})
 	if err != nil {
 		fmt.Println(err)
 	}

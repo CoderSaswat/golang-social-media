@@ -47,3 +47,9 @@ func (r *UserRepository) GetAllUsers() ([]model.User, error) {
 	err := r.DB.Preload("Address").Find(&users).Error
 	return users, err
 }
+
+func (r *UserRepository) UserExistsById(id uint) bool {
+	var user model.User
+	result := r.DB.First(&user, id)
+	return result.Error == nil
+}

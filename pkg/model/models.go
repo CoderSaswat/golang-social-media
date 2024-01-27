@@ -63,8 +63,9 @@ type Notification struct {
 }
 type Follow struct {
 	gorm.Model
-	UserID      uint `json:"userID"`
-	User        User `json:"user"`
-	FollowingId uint `json:"followingId"`
-	Following   User `json:"following"`
+	UserID       uint   `json:"userID"`
+	User         User   `json:"user"`
+	TargetUserID uint   `json:"targetUserID"`
+	TargetUser   User   `json:"targetUser"`
+	FollowType   string `json:"followType"`
 }
