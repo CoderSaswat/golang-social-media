@@ -1,9 +1,9 @@
 package dto
 
 type AddressDto struct {
-	Village string `json:"village"`
-	Pin     string `json:"pin"`
-	State   string `json:"state"`
-	Country string `json:"country"`
+	Village string `json:"village" validate:"required"`
+	Pin     string `json:"pin" validate:"required"`
+	State   string `json:"state" validate:"required"`
+	Country string `json:"country" validate:"required"`
 	UserId  uint   `json:"userId"`
 }

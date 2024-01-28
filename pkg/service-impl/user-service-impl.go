@@ -17,8 +17,12 @@ type UserServiceImpl struct {
 }
 
 func (s *UserServiceImpl) CreateUserV2(userDto *dto.UserDto) error {
+	err := dto.ValidateUserDto(*userDto)
+	if err != nil {
+		return err
+	}
 	user := model.User{}
-	err := smapping.FillStruct(&user, smapping.MapFields(userDto))
+	err = smapping.FillStruct(&user, smapping.MapFields(userDto))
 	if err != nil {
 		return err
 	}

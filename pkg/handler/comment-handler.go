@@ -30,44 +30,40 @@ func (h *CommentHandler) CreateComment(w http.ResponseWriter, r *http.Request) {
 	var comment model.Comment
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&comment); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		utils.ErrorResponse(w, nil, 400, err)
 		return
 	}
-	defer r.Body.Close()
-
 	if err := commentService.CreateComment(&comment); err != nil {
-		http.Error(w, "Error creating comment", http.StatusInternalServerError)
+		utils.ErrorResponse(w, nil, 500, err)
 		return
 	}
-
-	w.WriteHeader(http.StatusCreated)
+	utils.SuccessResponse(w, nil, 201, "comment posted")
 }
 
 func (h *CommentHandler) GetCommentByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	commentID, err := strconv.ParseUint(vars["id"], 10, 64)
 	if err != nil {
-		http.Error(w, "Invalid comment ID", http.StatusBadRequest)
+		utils.ErrorResponse(w, nil, 400, err)
 		return
 	}
 
 	comment, err := commentService.GetCommentByID(uint(commentID))
 	if err != nil {
-		http.Error(w, "Comment not found", http.StatusNotFound)
+		utils.ErrorResponse(w, nil, 400, err)
 		return
 	}
-
-	utils.JsonResponse(w, comment)
+	utils.SuccessResponse(w, comment, 200, "success")
 }
 
 func (h *CommentHandler) GetAllComments(w http.ResponseWriter, r *http.Request) {
 	comments, err := commentService.GetAllComments()
 	if err != nil {
-		http.Error(w, "Error fetching comments", http.StatusInternalServerError)
+		utils.ErrorResponse(w, nil, 400, err)
 		return
 	}
+	utils.SuccessResponse(w, comments, 200, "success")
 
-	utils.JsonResponse(w, comments)
 }
 
 func (h *CommentHandler) UpdateComment(w http.ResponseWriter, r *http.Request) {
