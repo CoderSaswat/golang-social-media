@@ -16,10 +16,12 @@ import (
 )
 
 var userService service.UserService
+var productService service.ProductService
 
 func init() {
 	db := config.GetDb()
 	userService = service_impl.NewUserServiceImpl(db)
+	productService = service_impl.NewProductServiceImpl(db)
 }
 
 type UserHandler struct {
@@ -33,6 +35,7 @@ func (h *UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	err = userService.CreateUser(&user)
+	//productService.GetProductById()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

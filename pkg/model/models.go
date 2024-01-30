@@ -68,3 +68,14 @@ type Follow struct {
 	TargetUser   User   `json:"targetUser"`
 	FollowType   string `json:"followType"`
 }
+type UserFaker struct {
+	ID    string `json:"id" faker:"uuid_hyphenated"`
+	Name  string `json:"name" faker:"name"`
+	Email string `json:"email" faker:"email"`
+}
+
+type Product struct {
+	ID    int     `json:"id"`
+	Name  string  `json:"name"`
+	Price float64 `json:"price"`
+}
