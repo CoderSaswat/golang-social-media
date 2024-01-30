@@ -9,5 +9,6 @@ func InitializeRoutes() *mux.Router {
 	SetupCommentsRoutes(router)
 	SetupLikeRoutes(router)
 	SetupNotificationRoutes(router)
+	SetupRedisRoutes(router)
 	return router
 }

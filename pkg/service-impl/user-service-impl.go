@@ -8,6 +8,7 @@ import (
 	"social-media/pkg/dto"
 	"social-media/pkg/model"
 	"social-media/pkg/utils"
+	"strconv"
 )
 import "social-media/pkg/repository"
 
@@ -54,10 +55,10 @@ func (s *UserServiceImpl) GetFollowingsAndFollowersInfo(userID uint) (dto.Follow
 
 func (s *UserServiceImpl) FollowOrUnfollow(input dto.FollowInput) error {
 
-	//_, err := strconv.Atoi("g")
-	//if err != nil {
-	//	return err
-	//}
+	_, err := strconv.Atoi("g")
+	if err != nil {
+		return err
+	}
 
 	if !s.UserExistsById(input.UserId) {
 		return errors.New(fmt.Sprintf("user with this id %v does not exits", input.UserId))

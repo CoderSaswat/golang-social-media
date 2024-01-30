@@ -19,6 +19,7 @@ type DBConfig struct {
 }
 
 func init() {
+	//db
 	dsn := "sqlserver://sa:root@localhost:1433?database=social-media"
 	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -45,16 +46,6 @@ func DbURL(dbConfig *DBConfig) string {
 	)
 	return s
 }
-
-//func GetDb() *gorm.DB {
-//	dsn := "sqlserver://sa:root@localhost:1433?database=social-media"
-//	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
-//	if err != nil {
-//		log.Fatalln(err)
-//	}
-//	fmt.Println("database connected")
-//	return db
-//}
 
 func GetDb() *gorm.DB {
 	return DB
